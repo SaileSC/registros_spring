@@ -11,14 +11,31 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+// Classe DTO (Data Transfer Object) para representar os dados de entrada ao criar uma nova cidade.
+// Esta classe é usada para transferir dados do cliente para o servidor sem expor a entidade completa.
 public class CidadeInputDTO {
+
+    // Nome da cidade que será inserido.
     private String nome;
+
+    // Nome do estado associado à cidade que será inserido.
     private String estado;
 
-    public Cidade build(EstadoRepository repository){
+    // Método que converte o DTO para a entidade Cidade.
+    // Ele busca o estado correspondente no repositório e o associa à cidade.
+    public Cidade build(EstadoRepository repository) {
+        // Cria uma nova instância da entidade Cidade.
         Cidade cidade = new Cidade();
+
+        // Define o nome da cidade com o valor passado no DTO.
         cidade.setNome(this.nome);
+
+        // Usa o repositório para buscar a entidade Estado pelo nome fornecido no DTO e
+        // associa o Estado encontrado à nova Cidade.
         cidade.setEstado(repository.findByNome(this.estado));
+
+        // Retorna a nova instância da entidade Cidade.
         return cidade;
     }
 }
+
